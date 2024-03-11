@@ -45,6 +45,16 @@
   border-right: 2px solid #000;
 }
 
+.main-nav span {
+  font-weight: bold;
+}
+
+/* .shops {
+  width: 500px;
+  max-height: 500px;
+  overflow: scroll;
+} */
+
 .shops,
 .medicaments {
   height: auto;

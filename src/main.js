@@ -1,3 +1,10 @@
+const KEY_CART = 'cart';
+const numberShoppingCart = document.querySelector('.main-nav span');
+
+if (localStorage.getItem(KEY_CART)) {
+  numberShoppingCart.textContent = JSON.parse(localStorage.getItem(KEY_CART)).length;
+}
+
 const shops = [
   {
     _id: {
@@ -35,6 +42,8 @@ const shops = [
     name: 'Caring Pharmacy',
   },
 ];
+
+//tczG0LzKPZ6fQRO9MarYzonKYTXf0zfV1ftJH1H7HYr6Tvvl2bfannmfH9bs2Aoq
 
 const medicamentsDB = [
   {
@@ -1290,9 +1299,9 @@ const firstShop = document.querySelector('.pharmacies button');
 
 addMedicaments(firstShop.dataset.id);
 
-pharmacies.addEventListener('click', el => {
-  if (el.target.nodeName === 'BUTTON') {
-    addMedicaments(el.target.dataset.id);
+pharmacies.addEventListener('click', event => {
+  if (event.target.nodeName === 'BUTTON') {
+    addMedicaments(event.target.dataset.id);
   }
 });
 
@@ -1309,7 +1318,7 @@ function addMedicaments(idShop) {
                       <p data-name>${currentValue.Name}</p>
                       <div class="price-detail">
                         <p data-price>${currentValue.price}</p>
-                        <button type="button" data-id="${currentValue._id.$oid}">Add</button>
+                        <button type="button" data-id="${currentValue._id.$oid}">Add to Cart</button>
                       <div>
                       <p data-description>${currentValue.description}</p>
                     </li>`
@@ -1320,3 +1329,26 @@ function addMedicaments(idShop) {
 
   medicaments.innerHTML = markupMedicaments;
 }
+
+medicaments.addEventListener('click', event => {
+  if (!(event.target.nodeName === 'BUTTON')) {
+    return;
+  }
+
+  let cartData = [];
+  let localCartData;
+  const getLocalCart = localStorage.getItem(KEY_CART);
+  const medicamentID = event.target.dataset.id;
+
+  if (getLocalCart) {
+    if(getLocalCart.includes(medicamentID)) {
+      return;
+    }
+    cartData = JSON.parse(getLocalCart);
+  }
+
+  cartData.push(medicamentID);
+  localCartData = JSON.stringify(cartData);
+  localStorage.setItem(KEY_CART, localCartData);
+  numberShoppingCart.textContent = cartData.length;
+});
