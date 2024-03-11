@@ -1310,7 +1310,7 @@ function addMedicaments(idShop) {
 
   markupMedicaments = medicamentsDB.reduce((accumulator, currentValue) => {
     if (idShop == currentValue.idshop) {
-      console.log(accumulator);
+      // console.log(accumulator);
       return (
         accumulator +
         `<li>

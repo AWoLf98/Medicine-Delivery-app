@@ -16,11 +16,6 @@
   -webkit-text-size-adjust: 100%;
 }
 
-.conteiner {
-  width: 1128px;
-  margin: 0 auto;
-}
-
 .main-nav ul {
   display: flex;
   margin-bottom: 12px;
