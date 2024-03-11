@@ -1,8 +1,12 @@
+import axios from 'axios';
+
 const KEY_CART = 'cart';
 const numberShoppingCart = document.querySelector('.main-nav span');
 
 if (localStorage.getItem(KEY_CART)) {
-  numberShoppingCart.textContent = JSON.parse(localStorage.getItem(KEY_CART)).length;
+  numberShoppingCart.textContent = JSON.parse(
+    localStorage.getItem(KEY_CART)
+  ).length;
 }
 
 const shops = [
@@ -1283,17 +1287,42 @@ const medicamentsDB = [
 const pharmacies = document.querySelector('.pharmacies');
 const medicaments = document.querySelector('.medicaments');
 
-pharmacies.append(
-  ...shops.map(({ id, name }) => {
-    const pharmacy = document.createElement('li');
-    const buttonPharmacy = document.createElement('button');
-    buttonPharmacy.type = 'button';
-    buttonPharmacy.dataset.id = id;
-    buttonPharmacy.textContent = name;
-    pharmacy.appendChild(buttonPharmacy);
-    return pharmacy;
+axios
+  .get('http://localhost:3016/api/shops', { 
+    params: {
+      _t: new Date().getTime() // Додаємо випадковий параметр
+    },
+    timeout: 10000 
   })
-);
+  .then(dataObj => {
+    console.log(dataObj.data);
+    pharmacies.append(
+    ...dataObj.data.map(({ id, name }) => {
+      const pharmacy = document.createElement('li');
+      const buttonPharmacy = document.createElement('button');
+      buttonPharmacy.type = 'button';
+      buttonPharmacy.dataset.id = id;
+      buttonPharmacy.textContent = name;
+      pharmacy.appendChild(buttonPharmacy);
+      return pharmacy;
+    })
+  );
+  })
+  .catch(error => {
+    console.log(error);
+  });
+
+// pharmacies.append(
+//   ...shops.map(({ id, name }) => {
+//     const pharmacy = document.createElement('li');
+//     const buttonPharmacy = document.createElement('button');
+//     buttonPharmacy.type = 'button';
+//     buttonPharmacy.dataset.id = id;
+//     buttonPharmacy.textContent = name;
+//     pharmacy.appendChild(buttonPharmacy);
+//     return pharmacy;
+//   })
+// );
 
 const firstShop = document.querySelector('.pharmacies button');
 
@@ -1334,6 +1363,9 @@ medicaments.addEventListener('click', event => {
   if (!(event.target.nodeName === 'BUTTON')) {
     return;
   }
+  axios.get('http://localhost:3020/api/shops', {timeout: 10000}).then(data => console.log(data)).catch(error => {
+    console.log(error)
+  });;
 
   let cartData = [];
   let localCartData;
@@ -1341,7 +1373,7 @@ medicaments.addEventListener('click', event => {
   const medicamentID = event.target.dataset.id;
 
   if (getLocalCart) {
-    if(getLocalCart.includes(medicamentID)) {
+    if (getLocalCart.includes(medicamentID)) {
       return;
     }
     cartData = JSON.parse(getLocalCart);
