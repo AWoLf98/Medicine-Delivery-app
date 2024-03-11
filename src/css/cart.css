@@ -1,0 +1,44 @@
+@import url('./reset.css');
+h1 {
+    margin-bottom: 12px;
+}
+
+.main-cart {
+  display: flex;
+  gap: 5px;
+}
+
+.main-cart li {
+  display: flex;
+  flex: 0 1 50%;
+  padding: 5px;
+  border-radius: 4px;
+  max-height: 100vh;
+  border: 1px solid #000;
+}
+
+.form-cart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+}
+
+.form-cart input {
+    width: 75%;
+    padding: 5px;
+  outline: transparent;
+  outline-offset: -1px;
+}
+
+.form-cart button {
+    width: 75%;
+    border-radius: 4px;
+    background-color: transparent;
+    border: 1px solid #000;
+}
+
+.form-cart button:hover {
+    background-color: silver;
+}
