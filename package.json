@@ -16,7 +16,6 @@
   "license": "ISC",
   "dependencies": {
     "mongodb": "^6.4.0",
-    "mysql": "^2.18.1",
     "node": "^21.7.1",
     "vite-plugin-full-reload": "^1.0.5",
     "vite-plugin-html-inject": "^1.0.1"
